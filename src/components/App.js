@@ -1,61 +1,81 @@
+import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-// import PopupWithForm from './PopupWithForm';
+import PopupWithForm from './PopupWithForm';
 
 export default function App() {
+
+  const [isEditProfilePopupOpen, setProfilePopupOpen] = React.useState('');
+  const [isAddPlacePopupOpen, setPlacePopupOpen] = React.useState('');
+  const [isEditAvatarPopupOpen, setAvatarPopupOpen] = React.useState('');
+
+  function handleEditAvatarClick() {
+    console.log("Avatar");
+    setAvatarPopupOpen('overlay_visible');
+    // const popup = document.querySelector('.overlay_for_avatar');
+    // popup.classList.add('overlay_visible');
+  }
+
+  function handleEditProfileClick() {
+    console.log("Profile");
+    setProfilePopupOpen('overlay_visible');
+    // const popup = document.querySelector('.overlay_for_profile');
+    // popup.classList.add('overlay_visible');
+  }
+
+  function handleAddPlaceClick() {
+    console.log("Place");
+    setPlacePopupOpen('overlay_visible');
+    // const popup = document.querySelector('.overlay_for_addCard');
+    // popup.classList.add('overlay_visible');
+  }
+
   return (
     <div className="page">
       <Header />
-      <Main />
+      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
       <Footer />
+      <PopupWithForm title={'Редактировать профиль'} name={'profile'} isOpen={isEditProfilePopupOpen} />
+      <PopupWithForm title={'Новое место'} name={'addCard'} isOpen={isAddPlacePopupOpen} />
+      <PopupWithForm title={'Обновить аватар'} name={'avatar'} isOpen={isEditAvatarPopupOpen} />
 
 
-    <section className="overlay overlay_for_profile">
-      <div className="modal-form prof">
-        <button className="modal-form__close" type="button"></button>
-        <h2 className="modal-form__title">Редактировать профиль</h2>
-        <form className="form form_for_profile" name="editForm" novalidate>
-          <input className="form__name form__name_for_profile form__input" id="nameInput" type="text" name="name" minlength="2" maxlength="40" required autocomplete="off" />
+    {/*
+        <form className="form form_for_profile" name="editForm" noValidate>
+          <input className="form__name form__name_for_profile form__input" id="nameInput" type="text" name="name" minLength="2" maxLength="40" required autoComplete="off" />
           <span className="form__text-error" id="nameInput-error"></span>
-          <input className="form__data form__data_for_profile form__input" id="description" type="text" name="about" minlength="2" maxlength="200" required autocomplete="off" />
+          <input className="form__data form__data_for_profile form__input" id="description" type="text" name="about" minLength="2" maxLength="200" required autoComplete="off" />
           <span className="form__text-error" id="description-error"></span>
           <button className="form__btn-submit" type="submit">Сохранить</button>
         </form>
       </div>
     </section>
 
-    <section className="overlay overlay_for_avatar">
-      <div className="modal-form modal-form_for_avatar">
-        <button className="modal-form__close" type="button"></button>
-        <h2 className="modal-form__title">Обновить аватар</h2>
-        <form className="form form_for_avatar" name="avatarForm" novalidate>
-          <input className="form__name form__name_for_avatar form__input" id="avatar" type="url" name="link" placeholder="Ссылка на картинку" required autocomplete="off" />
+
+        <form className="form form_for_avatar" name="avatarForm" noValidate>
+          <input className="form__name form__name_for_avatar form__input" id="avatar" type="url" name="link" placeholder="Ссылка на картинку" required autoComplete="off" />
           <span className="form__text-error" id="avatar-error"></span>
           <button className="form__btn-submit" type="submit">Сохранить</button>
         </form>
       </div>
     </section>
 
-    <section className="overlay overlay_for_addCard">
-      <div className="modal-form modal-form_for_addCard">
-        <button className="modal-form__close" type="button"></button>
-        <h2 className="modal-form__title">Новое место</h2>
-        <form className="form form_for_addCard" name="addForm" novalidate>
-          <input className="form__name form__name_for_addCard form__input" id="place" type="text" name="name" placeholder="Название" minlength="2" maxlength="30" required autocomplete="off" />
+        <form className="form form_for_addCard" name="addForm" noValidate>
+          <input className="form__name form__name_for_addCard form__input" id="place" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required autoComplete="off" />
           <span className="form__text-error" id="place-error"></span>
-          <input className="form__data form__data_for_addCard form__input" id="adress" type="url" name="link" placeholder="Ссылка на картинку" required autocomplete="off" />
+          <input className="form__data form__data_for_addCard form__input" id="adress" type="url" name="link" placeholder="Ссылка на картинку" required autoComplete="off" />
           <span className="form__text-error" id="adress-error"></span>
           <button className="form__btn-submit" type="submit">Создать</button>
         </form>
       </div>
-    </section>
+    </section> */}
 
     <section className="overlay overlay_for_delCard">
       <div className="modal-form modal-form_for_delCard">
         <button className="modal-form__close" type="button"></button>
         <h2 className="modal-form__title">Вы уверены?</h2>
-        <form className="form form_for_delCard" name="delCard" novalidate>
+        <form className="form form_for_delCard" name="delCard" noValidate>
           <button className="form__btn-submit" type="submit">Да</button>
         </form>
       </div>
