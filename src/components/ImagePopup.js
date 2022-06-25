@@ -1,5 +1,5 @@
 export default function ImagePopup(props) {
-console.log(props.card);
+
     return (
       <section className={`overlay overlay_for_view ${props.card && 'overlay_visible'}`}>
       <div className="modal-form modal-form_for_view">
@@ -12,3 +12,4 @@ console.log(props.card);
     </section>
     )
 }
+
