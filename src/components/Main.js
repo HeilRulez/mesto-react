@@ -24,7 +24,7 @@ export default function Main(props) {
         getCards(cards)
       })
       .catch(err => console.error(`Ошибка ${err} при загрузке данных.`))
-  });
+  }, []);
 
     return (
       <main>
