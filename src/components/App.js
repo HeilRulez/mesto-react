@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -7,10 +7,10 @@ import ImagePopup from './ImagePopup';
 
 export default function App() {
 
-  const [isEditProfilePopupOpen, setProfilePopupOpen] = React.useState('');
-  const [isAddPlacePopupOpen, setPlacePopupOpen] = React.useState('');
-  const [isEditAvatarPopupOpen, setAvatarPopupOpen] = React.useState('');
-  const [selectedCard, handleCardClick] = React.useState('');
+  const [isEditProfilePopupOpen, setProfilePopupOpen] = useState('');
+  const [isAddPlacePopupOpen, setPlacePopupOpen] = useState('');
+  const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState('');
+  const [selectedCard, handleCardClick] = useState('');
 
   function closeAllPopups() {
     setAvatarPopupOpen('');
@@ -18,7 +18,6 @@ export default function App() {
     setPlacePopupOpen('');
     handleCardClick('');
   }
-
 
   function handleEditAvatarClick() {
     setAvatarPopupOpen('overlay_visible');

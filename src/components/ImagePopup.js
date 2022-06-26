@@ -1,11 +1,11 @@
-export default function ImagePopup(props) {
+export default function ImagePopup({card, onClose}) {
 
     return (
-      <section className={`overlay overlay_for_view ${props.card && 'overlay_visible'}`}>
+      <section className={`overlay overlay_for_view ${card && 'overlay_visible'}`}>
       <div className="modal-form modal-form_for_view">
         <div>
-          <button className="modal-form__close" onClick={props.onClose} type="button"></button>
-      <img className="modal-form__view-img" src={props.card.link} alt={props.card.name} />
+          <button className="modal-form__close" onClick={onClose} type="button"></button>
+      <img className="modal-form__view-img" src={card.link} alt={card.name} />
         </div>
         <h2 className="modal-form__title modal-form__title_for_view"></h2>
       </div>

@@ -1,16 +1,16 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import api from '../utils/Api.js';
 import Card from './Card.js';
 
-export default function Main(props) {
+export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
-  const [userName, setuserName] = React.useState();
-  const [userDescription, setuserDescription] = React.useState();
-  const [userAvatar, setuserAvatar] = React.useState();
+  const [userName, setuserName] = useState('');
+  const [userDescription, setuserDescription] = useState('');
+  const [userAvatar, setuserAvatar] = useState('');
 
-  const [cards, getCards] = React.useState([]);
+  const [cards, getCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.setDataUser()
     .then(data => {
       setuserName(data.name);
@@ -29,21 +29,21 @@ export default function Main(props) {
     return (
       <main>
         <section className="profile">
-          <button className="profile__avatar" style={{backgroundImage:`url(${userAvatar})`}} onClick={props.onEditAvatar}>
+          <button className="profile__avatar" style={{backgroundImage:`url(${userAvatar})`}} onClick={onEditAvatar}>
             <div className="profile__avatar-edit"></div>
           </button>
           <div className="profile-info">
             <div className="profile-info__conteiner">
               <h1 className="profile-info__name">{userName}</h1>
-              <button className="profile-info__btn" type="button" onClick={props.onEditProfile}></button>
+              <button className="profile-info__btn" type="button" onClick={onEditProfile}></button>
             </div>
             <p className="profile-info__description">{userDescription}</p>
           </div>
-            <button className="profile__add-btn" type="button" onClick={props.onAddPlace}></button>
+            <button className="profile__add-btn" type="button" onClick={onAddPlace}></button>
         </section>
 
         <section className="cards">{cards.map((card) => (
-          <Card key={card._id} data={card} onCardClick={props.onCardClick} />
+          <Card key={card._id} data={card} onCardClick={onCardClick} />
         ))}</section>
     </main>
     )
