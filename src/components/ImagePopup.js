@@ -1,7 +1,7 @@
 export default function ImagePopup({card, onClose}) {
 
     return (
-      <section className={`overlay overlay_for_view ${card && 'overlay_visible'}`}>
+      <section className={`overlay overlay_for_view ${card.link && 'overlay_visible'}`}>
       <div className="modal-form modal-form_for_view">
         <div>
           <button className="modal-form__close" onClick={onClose} type="button"></button>
