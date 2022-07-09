@@ -27,6 +27,7 @@
 @import url(./blocks/card/__like/_active/card__like_active.css);
 @import url(./blocks/card/__like-count/card__like-count.css);
 @import url(./blocks/card/__del/card__del.css);
+@import url(./blocks/card/__del/_hidden/card__del_hidden.css);
 
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__copyright/footer__copyright.css);

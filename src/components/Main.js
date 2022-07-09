@@ -1,24 +1,14 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import api from '../utils/Api.js';
 import Card from './Card.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
-  const [userName, setuserName] = useState('');
-  const [userDescription, setuserDescription] = useState('');
-  const [userAvatar, setuserAvatar] = useState('');
-
   const [cards, getCards] = useState([]);
+  const currentUserContext = useContext(CurrentUserContext)
 
   useEffect(() => {
-    api.setDataUser()
-    .then(data => {
-      setuserName(data.name);
-      setuserDescription(data.about);
-      setuserAvatar(data.avatar);
-    })
-    .catch(err => console.error(`Ошибка ${err} при получении данных профиля.`));
-
     api.renderAllCards()
       .then(cards => {
         getCards(cards)
@@ -29,15 +19,15 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
     return (
       <main>
         <section className="profile">
-          <button className="profile__avatar" style={{backgroundImage:`url(${userAvatar})`}} onClick={onEditAvatar}>
+          <button className="profile__avatar" style={{backgroundImage:`url(${currentUserContext.avatar})`}} onClick={onEditAvatar}>
             <div className="profile__avatar-edit"></div>
           </button>
           <div className="profile-info">
             <div className="profile-info__conteiner">
-              <h1 className="profile-info__name">{userName}</h1>
+              <h1 className="profile-info__name">{currentUserContext.name}</h1>
               <button className="profile-info__btn" type="button" onClick={onEditProfile}></button>
             </div>
-            <p className="profile-info__description">{userDescription}</p>
+            <p className="profile-info__description">{currentUserContext.about}</p>
           </div>
             <button className="profile__add-btn" type="button" onClick={onAddPlace}></button>
         </section>

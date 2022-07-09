@@ -1,9 +1,11 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import api from '../utils/Api';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 export default function App() {
 
@@ -11,6 +13,13 @@ export default function App() {
   const [isAddPlacePopupOpen, setPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
   const [selectedCard, handleCardClick] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    api.getUserInfo()
+    .then(dataUser => setCurrentUser(dataUser))
+    .catch(err => console.error(`Ошибка ${err} при получении данных профиля.`));
+  })
 
   function closeAllPopups() {
     setAvatarPopupOpen(false);
@@ -32,9 +41,13 @@ export default function App() {
   }
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
       <Header />
-      <Main onCardClick={handleCardClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
+      <Main onCardClick={handleCardClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick} />
       <Footer />
       <PopupWithForm
         title={'Редактировать профиль'}
@@ -42,9 +55,13 @@ export default function App() {
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         buttonText={'Сохранить'}>
-          <input className="form__name form__name_for_profile form__input" id="nameInput" type="text" name="name" minLength="2" maxLength="40" placeholder="Имя" required autoComplete="off" />
+          <input className="form__name form__name_for_profile form__input"
+            id="nameInput" type="text" name="name" minLength="2" maxLength="40"
+              placeholder="Имя" required autoComplete="off" />
           <span className="form__text-error" id="nameInput-error"></span>
-          <input className="form__data form__data_for_profile form__input" id="description" type="text" name="about" minLength="2" maxLength="200" placeholder="Профиль" required autoComplete="off" />
+          <input className="form__data form__data_for_profile form__input"
+            id="description" type="text" name="about" minLength="2"
+            maxLength="200" placeholder="Профиль" required autoComplete="off" />
           <span className="form__text-error" id="description-error"></span>
       </PopupWithForm>
 
@@ -54,9 +71,13 @@ export default function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         buttonText={'Создать'}>
-          <input className="form__name form__name_for_addCard form__input" id="place" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required autoComplete="off" />
+          <input className="form__name form__name_for_addCard form__input"
+            id="place" type="text" name="name" placeholder="Название"
+            minLength="2" maxLength="30" required autoComplete="off" />
           <span className="form__text-error" id="place-error"></span>
-          <input className="form__data form__data_for_addCard form__input" id="adress" type="url" name="link" placeholder="Ссылка на картинку" required autoComplete="off" />
+          <input className="form__data form__data_for_addCard form__input"
+            id="adress" type="url" name="link" placeholder="Ссылка на картинку"
+              required autoComplete="off" />
           <span className="form__text-error" id="adress-error"></span>
       </PopupWithForm>
 
@@ -66,7 +87,9 @@ export default function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         buttonText={'Сохранить'}>
-          <input className="form__name form__name_for_avatar form__input" id="avatar" type="url" name="link" placeholder="Ссылка на картинку" required autoComplete="off" />
+          <input className="form__name form__name_for_avatar form__input"
+            id="avatar" type="url" name="link" placeholder="Ссылка на картинку"
+            required autoComplete="off" />
           <span className="form__text-error" id="avatar-error"></span>
       </PopupWithForm>
 
@@ -79,5 +102,6 @@ export default function App() {
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
   </div>
+  </CurrentUserContext.Provider>
   );
 }

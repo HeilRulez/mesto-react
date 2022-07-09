@@ -25,7 +25,7 @@ class Api {
       .then(res => this._checkResponse(res))
   }
 
-  setDataUser() {
+  getUserInfo() {
     return fetch(`${this._baseUrl}${this._cohort}/users/me`, {
         headers: {
           authorization: this._token
