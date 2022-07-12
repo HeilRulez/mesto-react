@@ -27,9 +27,8 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
 
   function handleCardDelete(card) {
     api.reqDelCard(card._id)
-    .then((data) => {
-      // setCards((data) => cards.filter());
-      console.log(data);
+    .then(() => {
+      setCards(cards.filter((item) => item._id !== card._id));
   })
     .catch(err => console.error(`Ошибка ${err} при удалении карточки.`));
   }
@@ -51,7 +50,11 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
         </section>
 
         <section className="cards">{cards.map((card) => (
-          <Card key={card._id} data={card} onCardClick={onCardClick} onCardLike={handleCardLike} />
+          <Card key={card._id}
+            data={card}
+            onCardClick={onCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}/>
         ))}</section>
     </main>
     )
