@@ -60,17 +60,17 @@ class Api {
       .then(res => this._checkResponse(res))
   }
 
-  handleLike(method, evt) {
-    if (method === 'DELETE') {
-      return fetch(`${this._baseUrl}${this._cohort}/cards/${evt.target.closest('.card').id}/likes`, {
+  handleLike(id, isLiked) {
+    if (!isLiked) {
+      return fetch(`${this._baseUrl}${this._cohort}/cards/${id}/likes`, {
           method: 'DELETE',
           headers: {
             authorization: this._token
           }
         })
         .then(res => this._checkResponse(res))
-    } else if (method === 'PUT') {
-      return fetch(`${this._baseUrl}${this._cohort}/cards/${evt.target.closest('.card').id}/likes`, {
+    } else {
+      return fetch(`${this._baseUrl}${this._cohort}/cards/${id}/likes`, {
           method: 'PUT',
           headers: {
             authorization: this._token
