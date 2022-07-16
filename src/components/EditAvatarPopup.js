@@ -1,9 +1,10 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import PopupWithForm from './PopupWithForm';
 
 export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 
   const avatar = useRef();
+  const [btnName, setBtnName]= useState('Сохранить');
 
   useEffect(() => {
       avatar.current.value = '';
@@ -11,9 +12,10 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setBtnName('Сохранение...');
     onUpdateAvatar({
       avatar: avatar.current.value,
-    });
+    }, setBtnName);
   }
 
   return (
@@ -23,7 +25,7 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleSubmit}
-        buttonText={'Сохранить'}>
+        buttonText={btnName}>
           <input className="form__name form__name_for_avatar form__input"
             id="avatar" type="url" name="link"
             ref={avatar} placeholder="Ссылка на картинку"

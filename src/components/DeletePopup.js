@@ -1,10 +1,14 @@
+import {useState} from 'react';
 import PopupWithForm from './PopupWithForm';
 
 export default function DeletePopup({isOpen, onClose, onDeleteCard, card}) {
 
+  const [btnName, setBtnName]= useState('Да');
+
   function handleSubmit(e) {
     e.preventDefault();
-    onDeleteCard(card);
+    setBtnName('Удаление...');
+    onDeleteCard(card, setBtnName);
   }
 
   return (
@@ -14,7 +18,7 @@ export default function DeletePopup({isOpen, onClose, onDeleteCard, card}) {
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleSubmit}
-        buttonText={'Да'} />
+        buttonText={btnName} />
 
   )
 }

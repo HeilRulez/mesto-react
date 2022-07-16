@@ -52,18 +52,24 @@ export default function App() {
     setDeletePopupOpen(true);
   }
 
-  function handleUpdateUser({name, about}) {
+  function handleUpdateUser({name, about}, setBtnName) {
     api.sendData(name, about)
-    .then((data) => {setCurrentUser(data)})
-    .catch(err => console.error(`Ошибка ${err} при отправке данных профиля.`));
-    closeAllPopups();
+    .then((data) => {
+      setCurrentUser(data);
+      closeAllPopups();
+    })
+    .catch(err => console.error(`Ошибка ${err} при отправке данных профиля.`))
+    .finally(() => {setBtnName('Сохранить')});
   }
 
-  function handleUpdateAvatar({avatar}) {
+  function handleUpdateAvatar({avatar}, setBtnName) {
     api.selectionAvatar(avatar)
-    .then((data) => {setCurrentUser(data)})
-    .catch(err => console.error(`Ошибка ${err} при получении аватара.`));
-    closeAllPopups();
+    .then((data) => {
+      setCurrentUser(data);
+      closeAllPopups();
+    })
+    .catch(err => console.error(`Ошибка ${err} при получении аватара.`))
+    .finally(() => {setBtnName('Сохранить')});
   }
 
   useEffect(() => {
@@ -83,21 +89,27 @@ export default function App() {
       .catch(err => console.error(`Ошибка ${err} при обработке лайка.`));
   }
 
-  function handleCardDelete(card) {
+  function handleCardDelete(card, setBtnName) {
     api.reqDelCard(card._id)
     .then(() => {
       setCards(cards.filter((item) => item._id !== card._id));
+      closeAllPopups();
   })
     .catch(err => console.error(`Ошибка ${err} при удалении карточки.`))
-    .finally(() => {setCardItem({})});
-    closeAllPopups();
+    .finally(() => {
+      setBtnName('Да');
+      setCardItem({});
+    });
   }
 
-  function handleAddPlaceSubmit({name, link}) {
+  function handleAddPlaceSubmit({name, link}, setBtnName) {
     api.getAllCards({name: name, link: link})
-    .then((newCard) => {setCards([newCard, ...cards])})
-    .catch(err => console.error(`Ошибка ${err} при добавлении карточки.`));
-    closeAllPopups();
+    .then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    })
+    .catch(err => console.error(`Ошибка ${err} при добавлении карточки.`))
+    .finally(() => {setBtnName('Создать')});
   }
 
   return (
